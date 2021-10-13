@@ -1,16 +1,39 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
+
+import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
+import { InMemoryDataService } from './services/in-memory-data.service';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { TaskListComponent } from './components/task-list/task-list.component';
+import { TaskFormComponent } from './components/task-form/task-form.component';
+import { OverviewComponent } from './containers/overview/overview.component';
+import { TaskDetailComponent } from './containers/task-detail/task-detail.component';
+import { AddTaskComponent } from './containers/add-task/add-task.component';
+import { ModifyTaskComponent } from './containers/modify-task/modify-task.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    TaskListComponent,
+    TaskFormComponent,
+    OverviewComponent,
+    TaskDetailComponent,
+    AddTaskComponent,
+    ModifyTaskComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule,
+    // The HttpClientInMemoryWebApiModule module intercepts HTTP requests
+    // and returns simulated server responses.
+    // Remove it when a real server is ready to receive requests.
+    HttpClientInMemoryWebApiModule.forRoot(
+      InMemoryDataService, { dataEncapsulation: false }
+    ),
   ],
   providers: [],
   bootstrap: [AppComponent]
