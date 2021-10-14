@@ -1,1 +1,20 @@
-<p>task-form works!</p>
+<form [formGroup]="taskForm" (ngSubmit)="onSubmit()">
+    <p>
+        <label>Title</label>
+        <input class="w3-input w3-border w3-margin-bottom" type="text" formControlName="title" required>
+    </p>
+
+    <p>
+        <label>Done</label>
+        <input class="w3-input w3-border" type="checkbox" formControlName="done">
+    </p>
+
+    <p>
+        <label>Description</label>
+        <textarea class="w3-input w3-border" rows="5" formControlName="description"></textarea>
+    </p>
+
+    <p>
+        <button type="submit" [disabled]="!taskForm.valid" class="w3-button w3-round w3-teal w3-ripple w3-margin">Submit</button>
+    </p>
+</form>

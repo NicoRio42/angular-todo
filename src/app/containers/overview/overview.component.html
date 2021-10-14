@@ -1,1 +1,15 @@
-<p>overview works!</p>
+<h1>Todo list</h1>
+
+<task-filter (filterTasksEvent)="filterTasks($event)"></task-filter>
+
+<task-list></task-list>
+
+<!-- <button routerLink="/add-task" class="w3-button w3-round w3-teal w3-ripple w3-margin">Add task</button> -->
+
+<!-- Add task modal -->
+<add-task-modal [style.display]="taskStore.addTaskModalIsVisible ? 'block' : 'none'"></add-task-modal>
+
+<button (click)="taskStore.addTaskModalIsVisible = true" class="w3-button w3-large w3-circle w3-xlarge w3-ripple w3-dark-grey add-task-float">+</button>
+
+<!-- Modify task modal -->
+<modify-task-modal [style.display]="taskStore.modifyTaskModalIsVisible ? 'block' : 'none'"></modify-task-modal>

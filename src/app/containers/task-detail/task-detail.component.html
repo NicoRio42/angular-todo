@@ -1,1 +1,13 @@
-<p>task-detail works!</p>
+<h1>Task details</h1>
+
+<h2>Title</h2>
+<p>{{ store.selectedTask.title }}</p>
+
+<h2>Status</h2>
+<p *ngIf="store.selectedTask.done; else elseBlock" class="w3-text-green">Done</p>
+<ng-template #elseBlock><p class="w3-text-red">To do</p></ng-template>
+
+<h2>Description</h2>
+<p>{{ store.selectedTask.description }}</p>
+
+<button routerLink="/modify-task/{{ store.selectedTask.id }}" class="w3-button w3-round w3-teal w3-ripple w3-margin">Modify task</button>

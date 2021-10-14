@@ -1,0 +1,11 @@
+<div class="w3-modal" style="display: block;">
+    <div class="w3-modal-content w3-card-4 w3-animate-zoom w3-container" style="max-width:600px">
+
+        <div class="w3-center"><br>
+            <h2>Modify Task</h2>
+            <button (click)="taskStore.modifyTaskModalIsVisible = false"
+                class="w3-button w3-xlarge w3-hover-red w3-display-topright">&times;</button>
+        </div>
+        <task-form (submitTaskEvent)="modifyTask($event)" [task]="taskStore.selectedTask"></task-form>
+    </div>
+</div>

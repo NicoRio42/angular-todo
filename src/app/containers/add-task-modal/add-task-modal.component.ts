@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router'
 
 import { TaskService } from '../../services/task.service'
 import { TaskStoreService } from '../../services/task-store.service'
@@ -7,16 +6,15 @@ import { TaskStoreService } from '../../services/task-store.service'
 import { Task } from '../../models/task';
 
 @Component({
-  selector: 'app-add-task',
-  templateUrl: './add-task.component.html',
-  styleUrls: ['./add-task.component.css']
+  selector: 'add-task-modal',
+  templateUrl: './add-task-modal.component.html',
+  styleUrls: ['./add-task-modal.component.css']
 })
-export class AddTaskComponent implements OnInit {
+export class AddTaskModalComponent implements OnInit {
 
   constructor(
     private taskService: TaskService,
-    public taskStoreService: TaskStoreService,
-    private router: Router,
+    public taskStore: TaskStoreService,
   ) { }
 
   ngOnInit(): void {
@@ -24,8 +22,12 @@ export class AddTaskComponent implements OnInit {
 
   addTask(newTask: Task) {
     this.taskService.addTask(newTask).subscribe(obs =>
-      this.router.navigate(['overview'])
+      this.closeModal()
     )
+  }
+
+  closeModal() {
+    this.taskStore.addTaskModalIsVisible = false
   }
 
 }

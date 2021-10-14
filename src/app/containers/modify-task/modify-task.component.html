@@ -1,1 +1,4 @@
-<p>modify-task works!</p>
+<section class="w3-container w3-section w3-card">
+    <h1>Modify task</h1>
+    <task-form (submitTaskEvent)="modifyTask($event)" [task]="store.selectedTask"></task-form>
+</section>

@@ -1,1 +1,5 @@
-<p>task-list works!</p>
+<ul class="w3-ul w3-border">
+    <div *ngFor="let task of taskStoreService.tasks">
+        <task-list-item [task]="task" *ngIf="task.title.toLowerCase().includes(taskStoreService.taskFilterText.toLowerCase())"></task-list-item>
+    </div>
+</ul>
