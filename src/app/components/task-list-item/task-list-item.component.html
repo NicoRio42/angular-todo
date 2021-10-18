@@ -1,12 +1,16 @@
-<li class="w3-tooltip">
-    <!-- <a routerLink="/task-detail/{{ task.id }}"><span>{{ task.title }}</span></a> -->
-    <span class="w3-button" (click)="taskStore.modifyTaskModalIsVisible = true; taskStore.selectedTask = task">
-        {{ task.title }}</span>
+<!-- <a routerLink="/task-detail/{{ task.id }}"><span>{{ task.title }}</span></a> -->
+<td class="w3-button" (click)="taskStore.modifyTaskModalIsVisible = true; taskStore.selectedTask = task">
+    {{ task.title }}
 
+    <span id="tooltip" class="w3-text w3-tag w3-round w3-dark-grey">{{ task.description }}</span></td>
+
+<td>{{ task.deadline }}</td>
+
+<td class="w3-right-align">
     <span class="w3-right w3-margin-left"><input type="checkbox" [formControl]="taskCheckbox"></span>
 
     <span *ngIf="task.done; else elseBlock" class="w3-right w3-text-green">Done</span>
     <ng-template #elseBlock><span class="w3-right w3-text-red">To do</span></ng-template>
+</td>
 
-    <span id="tooltip" class="w3-text w3-tag w3-round w3-dark-grey">{{ task.description }}</span>
-</li>
+<td (click)="deleteTask(task)" class="w3-right-align"><button class="w3-button w3-hover-dark-grey">&times;</button></td>

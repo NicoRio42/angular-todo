@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
 
 import { TaskStoreService } from './task-store.service';
 
@@ -53,5 +53,29 @@ export class TaskService {
         })
       })
     )
+  }
+  
+  deleteTask(taskToDelete: Task): Observable<Task> {
+    const url = `${this.tasksUrl}/${taskToDelete.id}`;
+
+    return this.http.delete<Task>(url, this.httpOptions).pipe(
+      tap(obs => {
+        this.store.tasks = this.store.tasks.filter(task => task.id !== taskToDelete.id)
+      }),
+    );
+  }
+
+  sortTasks(): void {
+    let tasksToSort = [...this.store.tasks]
+    tasksToSort.sort((a: Task, b: Task) => {
+      let dateA = new Date(a.deadline)
+      let dateB = new Date(b.deadline)
+      if (dateA > dateB)
+         return -1
+      if (dateA < dateB)
+         return 1
+      return 0;
+    })
+    this.store.tasks = tasksToSort
   }
 }

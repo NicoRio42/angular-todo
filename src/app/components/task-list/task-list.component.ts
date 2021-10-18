@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { TaskStoreService } from '../../services/task-store.service'
+import { TaskService } from '../../services/task.service'
 
 @Component({
   selector: 'task-list',
@@ -11,6 +12,7 @@ export class TaskListComponent implements OnInit {
 
   constructor(
     public taskStoreService: TaskStoreService,
+    public taskService: TaskService,
   ) { }
 
   ngOnInit(): void {

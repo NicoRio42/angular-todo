@@ -7,7 +7,7 @@ import { TaskStoreService } from '../../services/task-store.service'
 import { Task } from '../../models/task';
 
 @Component({
-  selector: 'task-list-item',
+  selector: '[task-list-item]',
   templateUrl: './task-list-item.component.html',
   styleUrls: ['./task-list-item.component.css']
 })
@@ -33,6 +33,10 @@ export class TaskListItemComponent implements OnInit, OnChanges {
   ngOnChanges() {
     // Update form with input value
     this.taskCheckbox.setValue(this.task.done)
+  }
+
+  deleteTask(task: Task) {
+    this.taskService.deleteTask(task).subscribe(obs => {})
   }
 
 }

@@ -13,10 +13,11 @@ export class TaskFormComponent implements OnInit, OnChanges {
   @Input() task:Task = <Task>{};
   
   taskForm = new FormGroup({
-    id: new FormControl(this.task.id),
-    title: new FormControl(this.task.title),
-    done: new FormControl(this.task.done),
-    description: new FormControl(this.task.description),
+    id: new FormControl(),
+    title: new FormControl(),
+    deadline: new FormControl(),
+    done: new FormControl(),
+    description: new FormControl(),
   })
 
   @Output() submitTaskEvent = new EventEmitter<Task>();
@@ -28,7 +29,7 @@ export class TaskFormComponent implements OnInit, OnChanges {
 
   ngOnChanges() {
     // Update form with input value
-    if (this.task) {
+    if (this.task.id) {
       let defaultTask = {...this.task}
       this.taskForm.setValue(defaultTask)
     }
@@ -36,6 +37,10 @@ export class TaskFormComponent implements OnInit, OnChanges {
 
   onSubmit() {
     this.submitTaskEvent.emit(this.taskForm.value);
+  }
+
+  clearForm() {
+    this.taskForm.reset()
   }
 
 }
