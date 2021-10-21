@@ -32,7 +32,7 @@ export class ModifyTaskComponent implements OnInit {
 
   modifyTask(modifiedTask: Task) {
     const id = parseInt(this.route.snapshot.paramMap.get('id')!);
-    modifiedTask.id = id // If not, 404 error
+    modifiedTask.task_id = id // If not, 404 error
     this.taskService.modifyTask(id, modifiedTask).subscribe(obs => {
       this.router.navigate(['task-detail/' + id]);
     })

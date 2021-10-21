@@ -13,7 +13,7 @@ import { Task } from '../../models/task';
 })
 export class TaskDetailComponent implements OnInit {
 
-  task: Task = {id: -1, title: "", deadline: "", done: false, description: ""}
+  task: Task = {task_id: -1, title: "", deadline: "", done: false, description: ""}
 
   constructor(
     private route: ActivatedRoute,

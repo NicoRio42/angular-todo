@@ -13,7 +13,7 @@ import { Task } from '../models/task';
 })
 export class TaskService {
   
-  private tasksUrl = 'api/tasks';
+  private tasksUrl = 'http://localhost:8080/api/tasks';
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
   };
@@ -29,10 +29,12 @@ export class TaskService {
         this.store.tasks = tasks
         this.filterTasks("") // Initiallize store.filteredTasks
         this.sortTasks()
+        console.log(tasks)
       }))
   }
 
   getTask(id: number): Observable<Task> {
+    console.log(id)
     const url = `${this.tasksUrl}/${id}`; // Is it necessary to fetch task?
     return this.http.get<Task>(url).pipe(
       tap(task => this.store.selectedTask = task)
@@ -40,6 +42,10 @@ export class TaskService {
   }
 
   addTask(task: Task): Observable<Task> {
+    // To prenvent null value on task.done and task.description
+    task.done = false
+    if (!task.description) {task.description = ""}
+
     return this.http.post<Task>(this.tasksUrl, task, this.httpOptions).pipe(
       tap(task => {
         this.store.tasks.push(task)
@@ -50,11 +56,12 @@ export class TaskService {
   }
 
   modifyTask(id: number, modifiedtask: Task): Observable<any> {
+    console.log(id)
     const url = `${this.tasksUrl}/${id}`;
     return this.http.put<Task>(url, modifiedtask, this.httpOptions).pipe(
       tap(obs => {
         for (let i = 0; i < this.store.tasks.length; i++) {
-          if (this.store.tasks[i].id === modifiedtask.id) {
+          if (this.store.tasks[i].task_id === modifiedtask.task_id) {
             this.store.tasks[i] = modifiedtask
           }
         }
@@ -65,11 +72,12 @@ export class TaskService {
   }
   
   deleteTask(taskToDelete: Task): Observable<Task> {
-    const url = `${this.tasksUrl}/${taskToDelete.id}`;
+    console.log(taskToDelete.task_id)
+    const url = `${this.tasksUrl}/${taskToDelete.task_id}`;
 
     return this.http.delete<Task>(url, this.httpOptions).pipe(
       tap(obs => {
-        this.store.tasks = this.store.tasks.filter(task => task.id !== taskToDelete.id)
+        this.store.tasks = this.store.tasks.filter(task => task.task_id !== taskToDelete.task_id)
         this.filterTasks(this.store.taskFilterText) // Update store.filteredTasks
       }),
     );

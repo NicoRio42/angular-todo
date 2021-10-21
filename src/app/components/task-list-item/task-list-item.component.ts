@@ -28,7 +28,7 @@ export class TaskListItemComponent implements OnInit, OnChanges {
       // PUT task when "done" checkbox is modified
       let modifiedTask = {...this.task}
       modifiedTask.done = value
-      this.taskService.modifyTask(modifiedTask.id, modifiedTask).subscribe(obs => {})
+      this.taskService.modifyTask(modifiedTask.task_id, modifiedTask).subscribe(obs => {})
     })
 
     const stringDate = new Date(this.task.deadline)
