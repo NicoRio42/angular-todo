@@ -25,11 +25,15 @@ export class TaskService {
 
   getTasks(): Observable<Task[]> {
     return this.http.get<Task[]>(this.tasksUrl).pipe(
-      tap(tasks => this.store.tasks = tasks))
+      tap(tasks => {
+        this.store.tasks = tasks
+        this.filterTasks("") // Initiallize store.filteredTasks
+        this.sortTasks()
+      }))
   }
 
   getTask(id: number): Observable<Task> {
-    const url = `${this.tasksUrl}/${id}`;
+    const url = `${this.tasksUrl}/${id}`; // Is it necessary to fetch task?
     return this.http.get<Task>(url).pipe(
       tap(task => this.store.selectedTask = task)
     )
@@ -37,7 +41,11 @@ export class TaskService {
 
   addTask(task: Task): Observable<Task> {
     return this.http.post<Task>(this.tasksUrl, task, this.httpOptions).pipe(
-      tap(task => this.store.tasks = [...this.store.tasks, task])
+      tap(task => {
+        this.store.tasks.push(task)
+        this.filterTasks(this.store.taskFilterText) // Update store.filteredTasks
+        this.sortTasks()
+      })
     )
   }
 
@@ -45,12 +53,13 @@ export class TaskService {
     const url = `${this.tasksUrl}/${id}`;
     return this.http.put<Task>(url, modifiedtask, this.httpOptions).pipe(
       tap(obs => {
-        this.store.tasks = this.store.tasks.map(storeTask => {
-          if (storeTask.id === modifiedtask.id) {
-            return modifiedtask
+        for (let i = 0; i < this.store.tasks.length; i++) {
+          if (this.store.tasks[i].id === modifiedtask.id) {
+            this.store.tasks[i] = modifiedtask
           }
-          return storeTask
-        })
+        }
+        this.filterTasks(this.store.taskFilterText) // Update store.filteredTasks
+        this.sortTasks()
       })
     )
   }
@@ -61,6 +70,7 @@ export class TaskService {
     return this.http.delete<Task>(url, this.httpOptions).pipe(
       tap(obs => {
         this.store.tasks = this.store.tasks.filter(task => task.id !== taskToDelete.id)
+        this.filterTasks(this.store.taskFilterText) // Update store.filteredTasks
       }),
     );
   }
@@ -71,11 +81,23 @@ export class TaskService {
       let dateA = new Date(a.deadline)
       let dateB = new Date(b.deadline)
       if (dateA > dateB)
-         return -1
-      if (dateA < dateB)
          return 1
+      if (dateA < dateB)
+         return -1
       return 0;
     })
     this.store.tasks = tasksToSort
+    this.filterTasks(this.store.taskFilterText) // Update store.filteredTasks
+  }
+
+  filterTasks(filteringText: string): void {
+    this.store.taskFilterText = filteringText
+    if (filteringText !== "") {
+      this.store.filteredTasks = this.store.tasks.filter(task =>
+        task.title.toLowerCase().includes(filteringText.toLowerCase())
+      )
+    } else {
+      this.store.filteredTasks = this.store.tasks
+    }
   }
 }

@@ -8,6 +8,7 @@ import { Task } from '../models/task'
 export class TaskStoreService {
 
   tasks: Task[] = []
+  filteredTasks: Task[] = []
   selectedTask: Task = <Task>{}
   taskFilterText: string = ""
   addTaskModalIsVisible = false;

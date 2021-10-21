@@ -12,7 +12,6 @@ export class TaskListComponent implements OnInit {
 
   constructor(
     public taskStoreService: TaskStoreService,
-    public taskService: TaskService,
   ) { }
 
   ngOnInit(): void {

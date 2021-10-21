@@ -16,8 +16,4 @@ export class OverviewComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  filterTasks(filterText: string) {
-    this.taskStore.taskFilterText = filterText
-  }
-
 }
