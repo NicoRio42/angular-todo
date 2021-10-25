@@ -1,7 +1,7 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
-import { TaskStoreService } from '../../services/task-store.service'
+import { TaskService } from '../../services/task.service'
 
 @Component({
   selector: 'task-filter',
@@ -11,15 +11,14 @@ import { TaskStoreService } from '../../services/task-store.service'
 export class TaskFilterComponent implements OnInit {
 
   taskFilter = new FormControl('');
-  @Output() filterTasksEvent = new EventEmitter<string>();
 
   constructor(
-    public taskStoreService: TaskStoreService,
+    public taskService: TaskService,
   ) { }
 
   ngOnInit(): void {
     this.taskFilter.valueChanges.subscribe(value => {
-      this.filterTasksEvent.emit(value);
+      this.taskService.filterTasks(value)
     })
   }
 

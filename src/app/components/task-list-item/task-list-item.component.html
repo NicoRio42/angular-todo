@@ -1,10 +1,10 @@
-<!-- <a routerLink="/task-detail/{{ task.id }}"><span>{{ task.title }}</span></a> -->
 <td class="w3-button" (click)="taskStore.modifyTaskModalIsVisible = true; taskStore.selectedTask = task">
     {{ task.title }}
 
     <span id="tooltip" class="w3-text w3-tag w3-round w3-dark-grey">{{ task.description }}</span></td>
 
-<td>{{ task.deadline }}</td>
+<td *ngIf="date < dateNow && !task.done; else deadlineElseBlock" class="w3-text-red">{{ task.deadline }}</td>
+<ng-template #deadlineElseBlock><td>{{ task.deadline }}</td></ng-template>
 
 <td class="w3-right-align">
     <span class="w3-right w3-margin-left"><input type="checkbox" [formControl]="taskCheckbox"></span>

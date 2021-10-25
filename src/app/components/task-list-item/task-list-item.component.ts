@@ -15,6 +15,8 @@ export class TaskListItemComponent implements OnInit, OnChanges {
 
   taskCheckbox = new FormControl(false);
   @Input() task:Task = <Task>{};
+  date: number = 0
+  dateNow: number = Date.now()
 
   constructor(
     private taskService: TaskService,
@@ -26,8 +28,11 @@ export class TaskListItemComponent implements OnInit, OnChanges {
       // PUT task when "done" checkbox is modified
       let modifiedTask = {...this.task}
       modifiedTask.done = value
-      this.taskService.modifyTask(modifiedTask.id, modifiedTask).subscribe(obs => {})
+      this.taskService.modifyTask(modifiedTask.task_id, modifiedTask).subscribe(obs => {})
     })
+
+    const stringDate = new Date(this.task.deadline)
+    this.date = stringDate.valueOf()
   }
 
   ngOnChanges() {

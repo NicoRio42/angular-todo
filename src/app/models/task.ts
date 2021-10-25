@@ -1,5 +1,5 @@
 export interface Task {
-    id: number;
+    task_id: number;
     title: string;
     deadline: string;
     done: boolean;

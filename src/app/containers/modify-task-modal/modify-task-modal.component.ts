@@ -21,8 +21,8 @@ export class ModifyTaskModalComponent implements OnInit {
   }
 
   modifyTask(modifiedTask: Task) {
-    const id = this.taskStore.selectedTask.id
-    modifiedTask.id = id // If not, 404 error
+    const id = this.taskStore.selectedTask.task_id
+    modifiedTask.task_id = id // If not, 404 error
     this.taskService.modifyTask(id, modifiedTask).subscribe(obs => this.closeModal())
   }
 
