@@ -30,9 +30,7 @@ export class TaskFormComponent implements OnInit, OnChanges {
   ngOnChanges() {
     // Update form with input value
     if (this.task.task_id) {
-      console.log(this.task)
-      let defaultTask = {...this.task}
-      this.taskForm.setValue(defaultTask)
+      this.taskForm.setValue(this.task)
     }
   }
 
